@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">My Notes</string>
+    <string name="app_name">Заметки</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings">Настройки</string>
+    <string name="info">О приложении</string>
 </resources>

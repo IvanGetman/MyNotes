@@ -6,9 +6,11 @@
         android:icon="@drawable/ic_notes"
         android:title=""
         app:showAsAction="always" />
+
     <item
-        android:id="@+id/btn_add_note"
-        android:icon="@drawable/ic_baseline_note_add_24"
+        android:id="@+id/btn_notes_grid"
+        android:icon="@drawable/ic_baseline_grid_on_24"
         android:title=""
         app:showAsAction="always" />
+
 </menu>

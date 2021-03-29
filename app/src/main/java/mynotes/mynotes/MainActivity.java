@@ -8,9 +8,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import mynotes.mynotes.domain.Note;
 import mynotes.mynotes.ui.item_note.ItemNoteFragment;
 import mynotes.mynotes.ui.notes_list.NotesFragmentList;
 
@@ -23,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        FloatingActionButton floatingActionButton = findViewById(R.id.btn_add_note);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTab(new ItemNoteFragment(), ItemNoteFragment.TAG);
+            }
+        });
+
 
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -32,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 if (itemId == R.id.btn_notes) {
                     openTab(new NotesFragmentList(), NotesFragmentList.TAG);
                     return true;
-                } else if (itemId == R.id.btn_add_note) {
+                } else if (itemId == R.id.btn_notes_grid) {
                     openTab(new ItemNoteFragment(), ItemNoteFragment.TAG);
                     return true;
                 }
@@ -44,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             openTab(new NotesFragmentList(), NotesFragmentList.TAG);
         }
-
     }
 
     private void openTab(Fragment fragment, String tag) {
