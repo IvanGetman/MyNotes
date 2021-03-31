@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,10 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
+import mynotes.mynotes.MainActivity;
 import mynotes.mynotes.R;
 import mynotes.mynotes.domain.Note;
+import mynotes.mynotes.ui.item_note.ItemNoteFragment;
 
 public class NotesFragmentList extends Fragment {
 
@@ -37,7 +43,7 @@ public class NotesFragmentList extends Fragment {
         adapter.setNoteClicked(new NoteAdapter.OnNoteClicked() {
             @Override
             public void onNoteClicked(Note note) {
-                Toast.makeText(requireContext(),note.getName(),Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), note.getName(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -66,5 +72,17 @@ public class NotesFragmentList extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 });
+
+        FloatingActionButton floatingActionButton = view.findViewById(R.id.btn_add_note);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_main, new ItemNoteFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
     }
 }
