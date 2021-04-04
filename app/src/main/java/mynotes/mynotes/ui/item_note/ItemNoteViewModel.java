@@ -6,14 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 public class ItemNoteViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<Boolean> mText = new MutableLiveData<>(false);
 
-    public ItemNoteViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is Item Note fragment");
-    }
-
-    public LiveData<String> getText() {
+    public LiveData<Boolean> getText() {
         return mText;
     }
 }

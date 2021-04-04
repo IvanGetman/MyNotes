@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
 
-    <TextView
+    <EditText
         android:id="@+id/input_name_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,9 +16,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Тема заметки" />
+        android:hint="@string/title_note"
+        tools:text="@string/title_note" />
 
-    <TextView
+    <EditText
         android:id="@+id/input_text_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +28,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_name_note"
-        tools:text="Текст заметки" />
+        android:hint="@string/text_note"
+        tools:text="@string/text_note" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
