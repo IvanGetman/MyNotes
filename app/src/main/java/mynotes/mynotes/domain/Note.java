@@ -1,8 +1,11 @@
 package mynotes.mynotes.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Note {
+public class Note implements Parcelable {
     private String id;
     private String name;
     private String description;
@@ -14,6 +17,36 @@ public class Note {
         this.description = description;
         this.date = date;
     }
+
+    protected Note(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        description = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(description);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 
     public String getId() {
         return id;

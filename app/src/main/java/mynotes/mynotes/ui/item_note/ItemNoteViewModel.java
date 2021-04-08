@@ -1,14 +1,61 @@
 package mynotes.mynotes.ui.item_note;
 
+import android.text.Editable;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import mynotes.mynotes.domain.Callback;
+import mynotes.mynotes.domain.Note;
+import mynotes.mynotes.domain.NotesRepository;
 
 public class ItemNoteViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> mText = new MutableLiveData<>(false);
 
+    public ItemNoteViewModel(NotesRepository repository) {
+        this.repository = repository;
+    }
+
     public LiveData<Boolean> getText() {
         return mText;
+    }
+
+    private final NotesRepository repository;
+
+    private MutableLiveData<Boolean> saveEnabled = new MutableLiveData<>(false);
+
+    public LiveData<Boolean> saveEnabled() {
+        return saveEnabled;
+    }
+
+    private MutableLiveData<Object> saveSucceed = new MutableLiveData<>();
+
+    public MutableLiveData<Object> saveSucceed() {
+        return saveSucceed;
+    }
+
+    public void saveNote(Editable text, Note note) {
+        note.setName(text.toString());
+        repository.updateNote(note, new Callback<Object>() {
+            @Override
+            public void onResult(Object value) {
+                saveSucceed.setValue(new Object());
+            }
+        });
+    }
+
+    public void deleteNote() {
+        repository.deleteNote(new Callback<Object>() {
+            @Override
+            public void onResult(Object value) {
+
+            }
+        });
+    }
+
+    public void validateInput(String newName) {
+        saveEnabled.setValue(newName.isEmpty());
     }
 }
