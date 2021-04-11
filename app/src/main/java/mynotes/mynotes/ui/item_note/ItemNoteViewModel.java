@@ -12,14 +12,8 @@ import mynotes.mynotes.domain.NotesRepository;
 
 public class ItemNoteViewModel extends ViewModel {
 
-    private MutableLiveData<Boolean> mText = new MutableLiveData<>(false);
-
     public ItemNoteViewModel(NotesRepository repository) {
         this.repository = repository;
-    }
-
-    public LiveData<Boolean> getText() {
-        return mText;
     }
 
     private final NotesRepository repository;
@@ -32,7 +26,7 @@ public class ItemNoteViewModel extends ViewModel {
 
     private MutableLiveData<Object> saveSucceed = new MutableLiveData<>();
 
-    public MutableLiveData<Object> saveSucceed() {
+    public LiveData<Object> saveSucceed() {
         return saveSucceed;
     }
 

@@ -40,7 +40,6 @@ public class ItemNoteFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -59,7 +58,9 @@ public class ItemNoteFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         itemNoteViewModel = new ViewModelProvider(this, new ItemNoteViewModelFactory()).get(ItemNoteViewModel.class);
-        note = getArguments().getParcelable(ARG_NOTE);
+        if (getArguments().containsKey(ARG_NOTE)) {
+            note = getArguments().getParcelable(ARG_NOTE);
+        }
     }
 
     @Nullable
