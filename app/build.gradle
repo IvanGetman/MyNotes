@@ -1,8 +1,16 @@
 plugins {
     id 'com.android.application'
 }
-
+apply plugin: 'com.google.gms.google-services'
 android {
+    signingConfigs {
+        debug {
+            storeFile file('./../key.jks')
+            storePassword 'Qazwsxedc1'
+            keyPassword 'Qazwsxedc1'
+            keyAlias 'notes'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -14,6 +22,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -29,7 +38,9 @@ android {
 }
 
 dependencies {
-
+    implementation platform('com.google.firebase:firebase-bom:27.0.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-firestore'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

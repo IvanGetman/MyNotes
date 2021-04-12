@@ -6,4 +6,8 @@
     <string name="info">О приложении</string>
     <string name="title_note">Тема заметки</string>
     <string name="text_note">Текст заметки</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    <string name="line">Список</string>
+    <string name="grid">Сетка</string>
 </resources>

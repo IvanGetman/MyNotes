@@ -18,6 +18,10 @@ public class Note implements Parcelable {
         this.date = date;
     }
 
+    public Note() {
+
+    }
+
     protected Note(Parcel in) {
         id = in.readString();
         name = in.readString();

@@ -50,14 +50,14 @@ public class MockNotesRepository implements NotesRepository {
     }
 
     @Override
-    public void deleteNote(Callback<Object> voidCallback) {
+    public void deleteNote(Note note, Callback<Object> objectCallback) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 mainThreadHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                voidCallback.onResult(new Object());
+                objectCallback.onResult(new Object());
                     }
                 });
             }
