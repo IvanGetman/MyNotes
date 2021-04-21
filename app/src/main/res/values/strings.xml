@@ -10,4 +10,8 @@
     <string name="line">Список</string>
     <string name="anything">Заглушка</string>
     <string name="hello">Hello</string>
+    <string name="alert_message">Подвердите удаление</string>
+    <string name="alert_title">Предупреждение</string>
+    <string name="ok">Удалить</string>
+    <string name="cancel">Отмена</string>
 </resources>
