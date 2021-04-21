@@ -12,22 +12,14 @@ import androidx.lifecycle.ViewModelProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Date;
 
 import mynotes.mynotes.R;
-import mynotes.mynotes.domain.MockNotesRepository;
 import mynotes.mynotes.domain.Note;
-import mynotes.mynotes.domain.NotesRepository;
-
 
 public class ItemNoteFragment extends Fragment {
 
@@ -36,6 +28,7 @@ public class ItemNoteFragment extends Fragment {
     private ItemNoteViewModel itemNoteViewModel;
     private Note note;
     private OnNoteSaved listener;
+    private OnNoteDelete listener_2;
 
 
     public static ItemNoteFragment newInstance(Note note) {
@@ -64,7 +57,7 @@ public class ItemNoteFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_NOTE)) {
+        if (getArguments() != null) {
             note = getArguments().getParcelable(ARG_NOTE);
         } else {
             note = new Note();
@@ -87,27 +80,6 @@ public class ItemNoteFragment extends Fragment {
         EditText textNote = view.findViewById(R.id.input_text_note);
         EditText nameNote = view.findViewById(R.id.input_name_note);
 
-        BottomNavigationView navView = view.findViewById(R.id.nav_view_2);
-
-        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-
-                if (itemId == R.id.btn_save_note) {
-                    Toast.makeText(requireContext(), "Save", Toast.LENGTH_LONG).show();
-                    itemNoteViewModel.saveNote(nameNote.getText(), textNote.getText(), note);
-                    return true;
-                } else if (itemId == R.id.btn_delete_note) {
-                    Toast.makeText(requireContext(), "Delete", Toast.LENGTH_LONG).show();
-                    itemNoteViewModel.deleteNote(note);
-                    return true;
-                }
-                return false;
-            }
-        });
-
-
         nameNote.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -121,6 +93,7 @@ public class ItemNoteFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 itemNoteViewModel.validateInput(s.toString());
             }
         });
@@ -128,10 +101,30 @@ public class ItemNoteFragment extends Fragment {
         nameNote.setText(note.getName());
         textNote.setText(note.getDescription());
 
+        Button buttonSave = view.findViewById(R.id.btn_save_note);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (note.getId() != null) {
+                    itemNoteViewModel.saveNote(nameNote.getText(), textNote.getText(), note);
+                } else {
+                    itemNoteViewModel.addNewNote(nameNote.getText(), textNote.getText(), note);
+                }
+            }
+        });
+
+        Button buttonDelete = view.findViewById(R.id.btn_delete_note);
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemNoteViewModel.deleteNote(note);
+            }
+        });
+
         itemNoteViewModel.saveEnabled().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                view.findViewById(R.id.btn_save_note).setEnabled(aBoolean);
+                buttonSave.setEnabled(aBoolean);
             }
         });
 
@@ -143,9 +136,29 @@ public class ItemNoteFragment extends Fragment {
                 }
             }
         });
+
+        itemNoteViewModel.deleteEnabled().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                buttonDelete.setEnabled(aBoolean);
+            }
+        });
+
+        itemNoteViewModel.deleteSucceed().observe(getViewLifecycleOwner(), new Observer<Object>() {
+            @Override
+            public void onChanged(Object o) {
+                if (listener_2 != null) {
+                    listener_2.onNoteDelete();
+                }
+            }
+        });
     }
 
     public interface OnNoteSaved {
         void onNoteSaved();
+    }
+
+    public interface OnNoteDelete {
+        void onNoteDelete();
     }
 }

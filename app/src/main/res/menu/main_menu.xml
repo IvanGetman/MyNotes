@@ -9,10 +9,10 @@
         app:showAsAction="withText" />
 
     <item
-        android:id="@+id/btn_notes_grid"
+        android:id="@+id/btn_42"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_grid_on_24"
-        android:title="@string/grid"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/anything"
         app:showAsAction="withText" />
 
 </menu>

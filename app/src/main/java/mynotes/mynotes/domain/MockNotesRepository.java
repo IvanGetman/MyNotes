@@ -69,5 +69,10 @@ public class MockNotesRepository implements NotesRepository {
 
     }
 
+    @Override
+    public void addNewNote(Note note,Callback<Note> noteCallback) {
+
+    }
+
 
 }
