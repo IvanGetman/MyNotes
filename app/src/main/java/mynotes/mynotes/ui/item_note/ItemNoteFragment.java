@@ -19,9 +19,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Date;
 
 import mynotes.mynotes.R;
+import mynotes.mynotes.domain.MockNotesRepository;
 import mynotes.mynotes.domain.Note;
+import mynotes.mynotes.domain.NotesRepository;
 
 
 public class ItemNoteFragment extends Fragment {
@@ -32,6 +37,7 @@ public class ItemNoteFragment extends Fragment {
     private Note note;
     private OnNoteSaved listener;
 
+
     public static ItemNoteFragment newInstance(Note note) {
         ItemNoteFragment fragment = new ItemNoteFragment();
         Bundle bundle = new Bundle();
@@ -39,7 +45,6 @@ public class ItemNoteFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
-
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -58,8 +63,13 @@ public class ItemNoteFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments().containsKey(ARG_NOTE)) {
+            note = getArguments().getParcelable(ARG_NOTE);
+        } else {
+            note = new Note();
+        }
         itemNoteViewModel = new ViewModelProvider(this, new ItemNoteViewModelFactory()).get(ItemNoteViewModel.class);
-        note = getArguments().getParcelable(ARG_NOTE);
     }
 
     @Nullable
@@ -86,16 +96,17 @@ public class ItemNoteFragment extends Fragment {
 
                 if (itemId == R.id.btn_save_note) {
                     Toast.makeText(requireContext(), "Save", Toast.LENGTH_LONG).show();
-                    itemNoteViewModel.saveNote(nameNote.getText(), note);
+                    itemNoteViewModel.saveNote(nameNote.getText(), textNote.getText(), note);
                     return true;
                 } else if (itemId == R.id.btn_delete_note) {
                     Toast.makeText(requireContext(), "Delete", Toast.LENGTH_LONG).show();
-                    itemNoteViewModel.deleteNote();
+                    itemNoteViewModel.deleteNote(note);
                     return true;
                 }
                 return false;
             }
         });
+
 
         nameNote.addTextChangedListener(new TextWatcher() {
             @Override

@@ -12,14 +12,8 @@ import mynotes.mynotes.domain.NotesRepository;
 
 public class ItemNoteViewModel extends ViewModel {
 
-    private MutableLiveData<Boolean> mText = new MutableLiveData<>(false);
-
     public ItemNoteViewModel(NotesRepository repository) {
         this.repository = repository;
-    }
-
-    public LiveData<Boolean> getText() {
-        return mText;
     }
 
     private final NotesRepository repository;
@@ -32,12 +26,13 @@ public class ItemNoteViewModel extends ViewModel {
 
     private MutableLiveData<Object> saveSucceed = new MutableLiveData<>();
 
-    public MutableLiveData<Object> saveSucceed() {
+    public LiveData<Object> saveSucceed() {
         return saveSucceed;
     }
 
-    public void saveNote(Editable text, Note note) {
-        note.setName(text.toString());
+    public void saveNote(Editable nameNote, Editable textNote, Note note) {
+        note.setName(nameNote.toString());
+        note.setDescription(textNote.toString());
         repository.updateNote(note, new Callback<Object>() {
             @Override
             public void onResult(Object value) {
@@ -46,8 +41,8 @@ public class ItemNoteViewModel extends ViewModel {
         });
     }
 
-    public void deleteNote() {
-        repository.deleteNote(new Callback<Object>() {
+    public void deleteNote(Note note) {
+        repository.deleteNote(note, new Callback<Object>() {
             @Override
             public void onResult(Object value) {
 
