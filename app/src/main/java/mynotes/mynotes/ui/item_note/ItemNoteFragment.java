@@ -1,10 +1,12 @@
 package mynotes.mynotes.ui.item_note;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -93,7 +95,6 @@ public class ItemNoteFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 itemNoteViewModel.validateInput(s.toString());
             }
         });
@@ -117,7 +118,7 @@ public class ItemNoteFragment extends Fragment {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemNoteViewModel.deleteNote(note);
+                showAlert();
             }
         });
 
@@ -152,6 +153,27 @@ public class ItemNoteFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void showAlert() {
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.alert_title)
+                .setMessage(R.string.alert_message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        itemNoteViewModel.deleteNote(note);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setCancelable(true)
+                .create();
+        dialog.show();
     }
 
     public interface OnNoteSaved {
