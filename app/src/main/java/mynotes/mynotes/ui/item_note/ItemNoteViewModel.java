@@ -30,12 +30,36 @@ public class ItemNoteViewModel extends ViewModel {
         return saveSucceed;
     }
 
+    private MutableLiveData<Boolean> deleteEnabled = new MutableLiveData<>(true);
+
+    public LiveData<Boolean> deleteEnabled() {
+        return deleteEnabled;
+    }
+
+    private MutableLiveData<Object> deleteSucceed = new MutableLiveData<>();
+
+    public LiveData<Object> deleteSucceed() {
+        return deleteSucceed;
+    }
+
     public void saveNote(Editable nameNote, Editable textNote, Note note) {
         note.setName(nameNote.toString());
         note.setDescription(textNote.toString());
+
         repository.updateNote(note, new Callback<Object>() {
             @Override
             public void onResult(Object value) {
+                saveSucceed.setValue(new Object());
+            }
+        });
+    }
+
+    public void addNewNote(Editable nameNote, Editable textNote, Note note) {
+        note.setName(nameNote.toString());
+        note.setDescription(textNote.toString());
+        repository.addNewNote(note, new Callback<Note>() {
+            @Override
+            public void onResult(Note value) {
                 saveSucceed.setValue(new Object());
             }
         });
@@ -45,12 +69,12 @@ public class ItemNoteViewModel extends ViewModel {
         repository.deleteNote(note, new Callback<Object>() {
             @Override
             public void onResult(Object value) {
-
+                deleteSucceed.setValue(new Object());
             }
         });
     }
 
     public void validateInput(String newName) {
-        saveEnabled.setValue(newName.isEmpty());
+        saveEnabled.setValue(!newName.isEmpty());
     }
 }

@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+
 public class FirestoreNotesRepository implements NotesRepository {
 
     public static final NotesRepository INSTANCE = new FirestoreNotesRepository();
@@ -76,6 +77,26 @@ public class FirestoreNotesRepository implements NotesRepository {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         objectCallback.onResult(new Object());
+                    }
+                });
+    }
+
+    @Override
+    public void addNewNote(Note note, Callback<Note> noteCallback) {
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(FIELD_NAME, note.getName());
+        data.put(FIELD_DESCRIPTION, note.getDescription());
+        data.put(FIELD_DATE, note.getDate());
+
+        fireStore.collection(NOTES_COLLECTION)
+                .add(data)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        String id = task.getResult().getId();
+                        note.setId(id);
+                        noteCallback.onResult(note);
                     }
                 });
     }

@@ -31,12 +31,30 @@
         app:layout_constraintTop_toBottomOf="@id/input_name_note"
         tools:text="@string/text_note" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view_2"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_save_note"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_primary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/note_menu" />
+        android:layout_margin="@dimen/app_margin_light"
+        android:backgroundTint="@color/buttonApp"
+        android:maxLines="1"
+        android:text="@string/save"
+        android:textSize="@dimen/app_text_size"
+        app:layout_constraintEnd_toStartOf="@id/btn_delete_note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_text_note" />
+
+    <Button
+        android:id="@+id/btn_delete_note"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/app_margin_light"
+        android:backgroundTint="@color/buttonApp"
+        android:maxLines="1"
+        android:text="@string/delete"
+        android:textSize="@dimen/app_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_save_note"
+        app:layout_constraintTop_toBottomOf="@id/input_text_note" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
