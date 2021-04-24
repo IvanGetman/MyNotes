@@ -27,23 +27,23 @@ public class MainActivity extends AppCompatActivity implements NotesFragmentList
         }
 
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-
-        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-
-                if (itemId == R.id.btn_notes) {
-                    openTab(new NotesFragmentList(), NotesFragmentList.TAG);
-                    return true;
-                } else if (itemId == R.id.btn_42) {
-                    Toast.makeText(getApplicationContext(), R.string.hello, Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                return false;
-            }
-        });
+//        BottomNavigationView navView = findViewById(R.id.nav_view);
+//
+//        navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                int itemId = item.getItemId();
+//
+//                if (itemId == R.id.btn_notes) {
+//                    openTab(new NotesFragmentList(), NotesFragmentList.TAG);
+//                    return true;
+//                } else if (itemId == R.id.btn_42) {
+//                    Toast.makeText(getApplicationContext(), R.string.hello, Toast.LENGTH_SHORT).show();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     private void openTab(Fragment fragment, String tag) {

@@ -30,7 +30,7 @@ public class ItemNoteFragment extends Fragment {
     private ItemNoteViewModel itemNoteViewModel;
     private Note note;
     private OnNoteSaved listener;
-    private OnNoteDelete listener_2;
+    private OnNoteDelete listenerOnNoteDelete;
 
 
     public static ItemNoteFragment newInstance(Note note) {
@@ -47,11 +47,15 @@ public class ItemNoteFragment extends Fragment {
         if (context instanceof OnNoteSaved) {
             listener = (OnNoteSaved) context;
         }
+        if (context instanceof OnNoteDelete) {
+            listenerOnNoteDelete = (OnNoteDelete) context;
+        }
     }
 
     @Override
     public void onDetach() {
         listener = null;
+        listenerOnNoteDelete = null;
         super.onDetach();
     }
 
@@ -148,8 +152,8 @@ public class ItemNoteFragment extends Fragment {
         itemNoteViewModel.deleteSucceed().observe(getViewLifecycleOwner(), new Observer<Object>() {
             @Override
             public void onChanged(Object o) {
-                if (listener_2 != null) {
-                    listener_2.onNoteDelete();
+                if (listenerOnNoteDelete != null) {
+                    listenerOnNoteDelete.onNoteDelete();
                 }
             }
         });
